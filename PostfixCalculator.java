@@ -6,9 +6,30 @@
  *   - https://jhucsf.github.io/spring2020/assign/assign02.html
  */
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Stack;  // Import the Stack class from java.util package
 
 public class PostfixCalculator {  // Define a class named PostfixCalculator
+
+    // Method to read expressions from a file, evaluate them, and print the results
+    public static void evaluateExpressionsFromFile(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line; // Individual line to be read
+            // Read each line from the file until the end
+            while ((line = reader.readLine()) != null) {
+                // Trim the line to remove leading and trailing whitespace
+                double result = evaluatePostfix(line.trim());
+                // Print the expression and its result
+                System.out.println("Expression: " + line.trim() + ", Result: " + result);
+            }
+        } catch (IOException e) {
+            // Handle any IOException that might occur during file reading
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
+
     public static double evaluatePostfix(String expression) {  
         Stack<Double> stack = new Stack<>();  // Create a Stack object to store operands
 
